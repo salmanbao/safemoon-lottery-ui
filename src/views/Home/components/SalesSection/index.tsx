@@ -159,7 +159,7 @@ const SalesSection: React.FC<SalesSectionProps> = (props) => {
               <Flex width='100%' flexDirection="column">
                 <Flex mb="30px" width='100%' flexDirection="column" justifyContent="space-between">
                   <Flex mb="20px" className="title text-color">Rollover Prizes</Flex>
-                  <Flex className="">After every round, if nobody wins in one of the prize brackets, the unclaimed CAKE for that bracket rolls over into the next round and are redistributed among the prize pools.</Flex>
+                  <Flex className="">After every round, if nobody wins in one of the prize brackets, the unclaimed SAFEMOON for that bracket rolls over into the next round and are redistributed among the prize pools.</Flex>
                 </Flex>
                 <Flex mb="30px" width='100%' flexDirection="column" justifyContent="space-between">
                   <Flex mb="20px" className="title text-color">Burn Wallet </Flex>

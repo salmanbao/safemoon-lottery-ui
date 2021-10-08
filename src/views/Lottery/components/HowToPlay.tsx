@@ -311,7 +311,7 @@ const HowToPlay: React.FC = () => {
             <li>
               <Text display="inline" color="textSubtle">
                 {t(
-                  'After every round, if nobody wins in one of the prize brackets, the unclaimed CAKE for that bracket rolls over into the next round and are redistributed among the prize pools.',
+                  'After every round, if nobody wins in one of the prize brackets, the unclaimed SAFEMOON for that bracket rolls over into the next round and are redistributed among the prize pools.',
                 )}
               </Text>
             </li>

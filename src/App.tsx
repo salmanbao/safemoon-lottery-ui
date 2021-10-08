@@ -83,7 +83,7 @@ const App: React.FC = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            <Route exact path="/farms/auction">
+            {/* <Route exact path="/farms/auction">
               <FarmAuction />
             </Route>
             <Route path="/farms">
@@ -91,14 +91,14 @@ const App: React.FC = () => {
             </Route>
             <Route path="/pools">
               <Pools />
-            </Route>
+            </Route> */}
             <Route path="/lottery">
               <Lottery />
             </Route>
             <Route path="/winner">
               <Winner />
             </Route>
-            <Route path="/ifo">
+            {/* <Route path="/ifo">
               <Ifos />
             </Route>
             <Route exact path="/teams">
@@ -127,24 +127,24 @@ const App: React.FC = () => {
             </Route>
             <Route path="/voting/proposal/:id">
               <Proposal />
-            </Route>
+            </Route> */}
 
             {/* NFT */}
-            <Route path="/nfts">
+            {/* <Route path="/nfts">
               <NftMarket />
             </Route>
 
             <Route path="/pancake-squad">
               <PancakeSquad />
-            </Route>
+            </Route> */}
 
             {/* Info pages */}
-            <Route path="/info">
+            {/* <Route path="/info">
               <Info />
-            </Route>
+            </Route> */}
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-            <Route exact strict path="/swap" component={Swap} />
+            {/* <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
             <Route exact strict path="/find" component={PoolFinder} />
@@ -157,10 +157,10 @@ const App: React.FC = () => {
             <Route exact path="/create/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
             <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
             <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
-            <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+            <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} /> */}
 
             {/* Redirect */}
-            <Route path="/pool">
+            {/* <Route path="/pool">
               <Redirect to="/liquidity" />
             </Route>
             <Route path="/staking">
@@ -174,7 +174,7 @@ const App: React.FC = () => {
             </Route>
             <Route path="/profile">
               <Redirect to={`${nftsBaseUrl}/profile/${account?.toLowerCase() || ''}`} />
-            </Route>
+            </Route> */}
 
             {/* 404 */}
             <Route component={NotFound} />
