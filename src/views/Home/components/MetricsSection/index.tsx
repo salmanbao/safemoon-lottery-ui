@@ -7,6 +7,9 @@ import { formatLocalisedCompactNumber } from 'utils/formatBalance'
 import IconCard, { IconCardData } from '../IconCard'
 import StatCardContent from './StatCardContent'
 import GradientLogo from '../GradientLogoSvg'
+import Step1 from '../../../../assets/images/Buy.png'
+import Step2 from '../../../../assets/images/wait.png'
+import Step3 from '../../../../assets/images/Win.png'
 
 // Values fetched from bitQuery effective 6/9/21
 const txCount = 30841921
@@ -37,51 +40,83 @@ const Stats = () => {
   }
 
   return (
-    <Flex justifyContent="center" alignItems="center" flexDirection="column">
-      <GradientLogo height="48px" width="48px" mb="24px" />
-      <Heading textAlign="center" scale="xl">
-        {t('Used by millions.')}
+    <Flex className="how-to-play" justifyContent="center" alignItems="center" flexDirection="column">
+      {/* <GradientLogo height="48px" width="48px" mb="24px" /> */}
+      <Heading className="section-heading" fontWeight="300" textAlign="center" color="white" scale="xl">
+        {t('How to Play.')}
       </Heading>
-      <Heading textAlign="center" scale="xl" mb="32px">
-        {t('Trusted with billions.')}
-      </Heading>
-      <Text textAlign="center" color="textSubtle">
-        {t('PancakeSwap has the most users of any decentralized platform, ever.')}
-      </Text>
-      <Flex flexWrap="wrap">
+      <div className="heading-descr" >
+      <p>If the digits on your tickets match the winning numbers in the correct order, you win a portion of the prize pool. Simple!</p>
+       <p>If you <span className="text-color">buy multiple</span> lottery tickets you get a discount.</p>
+      </div>
+      {/* <Flex flexWrap="wrap">
         <Text display="inline" textAlign="center" color="textSubtle" mb="20px">
           {entrusting}
           <>{data ? <>{tvlString}</> : <Skeleton display="inline-block" height={16} width={70} mt="2px" />}</>
           {inFunds}
         </Text>
-      </Flex>
+      </Flex> */}
 
-      <Text textAlign="center" color="textSubtle" bold mb="32px">
+      {/* <Text textAlign="center" color="textSubtle" bold mb="32px">
         {t('Will you join them?')}
-      </Text>
+      </Text> */}
 
-      <Flex flexDirection={['column', null, null, 'row']}>
-        <IconCard {...UsersCardData} mr={[null, null, null, '16px']} mb={['16px', null, null, '0']}>
+      <Flex className="steps-wrapper" flexDirection={['column', null, null, 'row']}>
+
+        <Flex className="step" flexDirection='column'>
+          <div className="number">Step 1</div>
+          <div className="image">
+            <img src={Step1} alt="Buy" />
+          </div>
+          <h3>Buy TICKETS</h3>
+          <p>Prices are set when the round starts, equal to 5 USD in SAFEMOON per ticket.</p>
+        </Flex>
+        <Flex className="step" flexDirection='column'>
+          <div className="number">Step 2</div>
+          <div className="image">
+            <img src={Step1} alt="Wait" />
+          </div>
+          <h3>Wait for the draw</h3>
+          <p>There are two draws every day: one every 12 hours.</p>
+        </Flex>
+        <Flex className="step" flexDirection='column'>
+          <div className="number">Step 3</div>
+          <div className="image">
+            <img src={Step1} alt="Win" />
+          </div>
+          <h3>Check for prizes</h3>
+          <p>Once the round’s over, come back to the page and check to see if you’ve won!</p>
+        </Flex>
+        {/* <IconCard {...UsersCardData} mr={[null, null, null, '16px']} mb={['16px', null, null, '0']}>
           <StatCardContent
-            headingText={t('%users% users', { users })}
-            bodyText={t('in the last 30 days')}
+            headingText={t('Buy TICKETS')}
+            bodyText={t('Prices are set when the round starts, equal to 5 USD in SAFEMOON per ticket.')}
             highlightColor={theme.colors.secondary}
           />
         </IconCard>
         <IconCard {...TradesCardData} mr={[null, null, null, '16px']} mb={['16px', null, null, '0']}>
           <StatCardContent
-            headingText={t('%trades% trades', { trades })}
-            bodyText={t('made in the last 30 days')}
+            headingText={t('Wait for the draw')}
+            bodyText={t('There are two draws every day: one every 12 hours.')}
             highlightColor={theme.colors.primary}
           />
         </IconCard>
         <IconCard {...StakedCardData}>
           <StatCardContent
-            headingText={t('$%tvl% staked', { tvl: tvlString })}
-            bodyText={t('Total Value Locked')}
+            headingText={t('Check for prizes')}
+            bodyText={t('Once the round’s over, come back to the page and check to see if you’ve won!')}
             highlightColor={theme.colors.failure}
           />
-        </IconCard>
+        </IconCard> */}
+      </Flex>
+      <Flex className="multiple-tickets" flexDirection='column'>
+        <Text className="title">Buy multiple tickets </Text>
+        <p>Increase the odds! Buying multiple tickets in a single transaction will give you a discount.</p>
+        <ul>
+          <li>20 tickets: 1% </li>
+          <li>50 tickets: 4%</li>
+          <li>100 tickets: 10%</li>
+        </ul>
       </Flex>
     </Flex>
   )

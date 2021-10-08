@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { Link } from 'react-router-dom'
-import { Flex, Heading, Button } from '@pancakeswap/uikit'
+// import { Link } from 'react-router-dom'
+import { Flex, Heading,Text, Link, Button } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { useTranslation } from 'contexts/Localization'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -75,8 +75,8 @@ const StarsWrapper = styled.div`
   }
 `
 
-const imagePath = '/images/home/lunar-bunny/'
-const imageSrc = 'bunny'
+const imagePath = '/images/home/banner/'
+const imageSrc = 'banner'
 
 const starsImage: CompositeImageProps = {
   path: '/images/home/lunar-bunny/',
@@ -94,28 +94,27 @@ const Hero = () => {
 
   return (
     <>
-      <BgWrapper>
+      {/* <BgWrapper>
         <InnerWrapper>{theme.isDark ? <SlideSvgDark width="100%" /> : <SlideSvgLight width="100%" />}</InnerWrapper>
-      </BgWrapper>
+      </BgWrapper> */}
       <Flex
         position="relative"
         flexDirection={['column-reverse', null, null, 'row']}
         alignItems={['flex-end', null, null, 'center']}
         justifyContent="center"
-        mt={[account ? '280px' : '50px', null, 0]}
-        id="homepage-hero"
+        
       >
-        <Flex flex="1" flexDirection="column">
-          <Heading scale="xxl" color="secondary" mb="24px">
-            {t('The moon is made of pancakes.')}
+        <Flex className="banner-content" flex="1" flexDirection="column">
+          <Heading className="section-heading" scale="xl" color="white" mb="24px">
+            <p>Help the Safemoon burn and win a slice of the prize pool with our <span className="text-color">safemoon lottery</span></p>
           </Heading>
-          <Heading scale="md" mb="24px">
-            {t('Trade, earn, and win crypto on the most popular decentralized platform in the galaxy.')}
-          </Heading>
-          <Flex>
+          <Text className="heading-descr" color="white">
+            {t('Buy your lottery tickets using Safemoon and be in with the chance to increase your Safemoon bag whilst helping the community burn the total supply. The cost of a lottery ticket is $5 (paid in Safemoon). 70% of the total ticket purchases go to the Prize pool to be redistributed amongst the winners, 25% of the total ticket purchases go to the Official Safemoon Burn Wallet and 5% go to a “Funding Wallet” which we will use to grow this and other Safemoon related projects.')}
+          </Text>
+          <Flex justifyContent={['start', null, null, null]}>
             {!account && <ConnectWalletButton mr="8px" />}
-            <Link to="/swap">
-              <Button variant={!account ? 'secondary' : 'primary'}>{t('Trade Now')}</Button>
+            <Link mr="16px" href="/lottery">
+              <Button className="custom-btn" variant={!account ? 'secondary' : 'primary'}>{t('How to Play')}</Button>
             </Link>
           </Flex>
         </Flex>
@@ -125,13 +124,14 @@ const Hero = () => {
           flex={[null, null, null, '1']}
           mb={['24px', null, null, '0']}
           position="relative"
+          display={['none !important', null,null,'block !important']}
         >
           <BunnyWrapper>
             <img src={`${imagePath}${imageSrc}.png`} srcSet={getSrcSet(imagePath, imageSrc)} alt={t('Lunar bunny')} />
           </BunnyWrapper>
-          <StarsWrapper>
+          {/* <StarsWrapper>
             <CompositeImage {...starsImage} />
-          </StarsWrapper>
+          </StarsWrapper> */}
         </Flex>
       </Flex>
     </>

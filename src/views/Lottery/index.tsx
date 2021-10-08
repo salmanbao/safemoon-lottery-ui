@@ -24,6 +24,7 @@ import AllHistoryCard from './components/AllHistoryCard'
 import CheckPrizesSection from './components/CheckPrizesSection'
 import HowToPlay from './components/HowToPlay'
 import useShowMoreUserHistory from './hooks/useShowMoreUserRounds'
+import Footer from '../Home/components/Footer'
 
 const LotteryPage = styled.div`
   min-height: calc(100vh - 64px);
@@ -41,23 +42,14 @@ const Lottery = () => {
   const endTimeAsInt = parseInt(endTime, 10)
   const { nextEventTime, postCountdownText, preCountdownText } = useGetNextLotteryEvent(endTimeAsInt, status)
   const { numUserRoundsRequested, handleShowMoreUserRounds } = useShowMoreUserHistory()
+  const FooterContainerStyles = { margin: '0', width: '100%', maxWidth: '1280px' }
 
   return (
     <LotteryPage>
-      <PageSection background={TITLE_BG} index={1} hasCurvedDivider={false}>
+      <PageSection className="lottery-banner" background={TITLE_BG} index={1} hasCurvedDivider={false}>
         <Hero />
-      </PageSection>
-      <PageSection
-        containerProps={{ style: { marginTop: '-30px' } }}
-        background={GET_TICKETS_BG}
-        concaveDivider
-        clipFill={{ light: '#7645D9' }}
-        dividerPosition="top"
-        index={2}
-      >
-        <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
-          {status === LotteryStatus.OPEN && (
-            <Heading scale="xl" color="#ffffff" mb="24px" textAlign="center">
+        {status === LotteryStatus.OPEN && (
+            <Heading className="tickets" scale="lg" color="#ffffff" mt="50px" mb="24px" textAlign="center">
               {t('Get your tickets now!')}
             </Heading>
           )}
@@ -72,45 +64,27 @@ const Lottery = () => {
               <Skeleton height="41px" width="250px" />
             )}
           </Flex>
-          <NextDrawCard />
-        </Flex>
       </PageSection>
-      <PageSection background={CHECK_PRIZES_BG} hasCurvedDivider={false} index={2}>
-        <CheckPrizesSection />
-      </PageSection>
-      <PageSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        background={isDark ? FINISHED_ROUNDS_BG_DARK : FINISHED_ROUNDS_BG}
+      <PageSection className="banner-bottom"
+        containerProps={{ style: { marginTop: '-30px' } }}
+        background={GET_TICKETS_BG}
         hasCurvedDivider={false}
         index={2}
       >
-        <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
-          <Heading mb="24px" scale="xl">
-            {t('Finished Rounds')}
-          </Heading>
-          <Box mb="24px">
-            <HistoryTabMenu
-              activeIndex={historyTabMenuIndex}
-              setActiveIndex={(index) => setHistoryTabMenuIndex(index)}
-            />
-          </Box>
-          {historyTabMenuIndex === 0 ? (
-            <AllHistoryCard />
-          ) : (
-            <YourHistoryCard
-              handleShowMoreClick={handleShowMoreUserRounds}
-              numUserRoundsRequested={numUserRoundsRequested}
-            />
-          )}
+        <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
+          
+          <NextDrawCard />
         </Flex>
       </PageSection>
-      <PageSection
-        dividerPosition="top"
-        dividerFill={{ light: theme.colors.background }}
-        clipFill={{ light: '#9A9FD0', dark: '#66578D' }}
+      
+      
+      <PageSection className="footer-section"
+        innerProps={{ style: FooterContainerStyles }}
+        background="#434343"
         index={2}
+        hasCurvedDivider={false}
       >
-        <HowToPlay />
+        <Footer/>
       </PageSection>
     </LotteryPage>
   )

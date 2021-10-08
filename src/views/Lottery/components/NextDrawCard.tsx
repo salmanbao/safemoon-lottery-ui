@@ -44,7 +44,7 @@ const StyledCard = styled(Card)`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    width: 756px;
+    width: 850px;
   }
 `
 
@@ -135,10 +135,10 @@ const NextDrawCard = () => {
 
   return (
     <StyledCard>
-      <CardHeader p="16px 24px">
+      <CardHeader style={{background: '#DDDDDD'}} p="16px 24px">
         <Flex justifyContent="space-between">
-          <Heading mr="12px">{t('Next Draw')}</Heading>
-          <Text>
+          <Heading style={{color: '#585858'}} mr="12px">{t('Next Draw')}</Heading>
+          <Text style={{color: '#585858'}} >
             {currentLotteryId && `#${getNextDrawId()}`} {Boolean(endTime) && getNextDrawDateTime()}
           </Text>
         </Flex>
@@ -192,16 +192,16 @@ const NextDrawCard = () => {
         </Grid>
       </CardBody>
       <CardFooter p="0">
-        {isExpanded && (
+        {/* {isExpanded && ( */}
           <NextDrawWrapper>
             <RewardBrackets lotteryNodeData={currentRound} />
           </NextDrawWrapper>
-        )}
+        {/* )} */}
         {(status === LotteryStatus.OPEN || status === LotteryStatus.CLOSE) && (
           <Flex p="8px 24px" alignItems="center" justifyContent="center">
-            <ExpandableLabel expanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}>
+            {/* <ExpandableLabel expanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? t('Hide') : t('Details')}
-            </ExpandableLabel>
+            </ExpandableLabel> */}
           </Flex>
         )}
       </CardFooter>
