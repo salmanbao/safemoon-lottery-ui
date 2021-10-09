@@ -505,19 +505,17 @@ interface LotteryRoundGenerics {
 
 export interface LotteryRound extends LotteryRoundGenerics {
   userTickets?: LotteryRoundUserTickets
-  priceTicketInCake: BigNumber
-  discountDivisor: BigNumber
-  amountCollectedInCake: BigNumber
-  cakePerBracket: string[]
+  priceTicketInSafemoon: BigNumber
+  amountCollectedInSafemoon: BigNumber
+  safemoonPerBracket: string[]
   countWinnersPerBracket: string[]
   rewardsBreakdown: string[]
 }
 
 export interface LotteryResponse extends LotteryRoundGenerics {
-  priceTicketInCake: SerializedBigNumber
-  discountDivisor: SerializedBigNumber
-  amountCollectedInCake: SerializedBigNumber
-  cakePerBracket: SerializedBigNumber[]
+  priceTicketInSafemoon: SerializedBigNumber
+  amountCollectedInSafemoon: SerializedBigNumber
+  safemoonPerBracket: SerializedBigNumber[]
   countWinnersPerBracket: SerializedBigNumber[]
   rewardsBreakdown: SerializedBigNumber[]
 }

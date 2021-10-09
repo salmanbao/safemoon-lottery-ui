@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { ethers, Contract } from 'ethers'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 
 const useIfoApprove = (tokenContract: Contract, spenderAddress: string) => {
   const { callWithGasPrice } = useCallWithGasPrice()

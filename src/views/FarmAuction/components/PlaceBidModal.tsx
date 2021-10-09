@@ -17,7 +17,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import ApproveConfirmButtons, { ButtonArrangement } from 'components/ApproveConfirmButtons'
 import { ConnectedBidder } from 'config/constants/types'
 import { usePriceCakeBusd } from 'state/farms/hooks'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import tokens from 'config/constants/tokens'
 
@@ -100,36 +100,42 @@ const PlaceBidModal: React.FC<PlaceBidModalProps> = ({
     }
   }, [isMultipleOfTen, isMoreThanInitialBidAmount, userNotEnoughCake, initialBidAmount, t, isFirstBid])
 
-  const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
-    useApproveConfirmTransaction({
-      onRequiresApproval: async () => {
-        try {
-          const response = await cakeContract.allowance(account, farmAuctionContract.address)
-          const currentAllowance = ethersToBigNumber(response)
-          return currentAllowance.gt(0)
-        } catch (error) {
-          return false
-        }
-      },
-      onApprove: () => {
-        return callWithGasPrice(cakeContract, 'approve', [farmAuctionContract.address, ethers.constants.MaxUint256])
-      },
-      onApproveSuccess: async ({ receipt }) => {
-        toastSuccess(
-          t('Contract approved - you can now place your bid!'),
-          <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
-        )
-      },
-      onConfirm: () => {
-        const bidAmount = new BigNumber(bid).times(DEFAULT_TOKEN_DECIMAL).toString()
-        return callWithGasPrice(farmAuctionContract, 'bid', [bidAmount])
-      },
-      onSuccess: async ({ receipt }) => {
-        refreshBidders()
-        onDismiss()
-        toastSuccess(t('Bid placed!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-      },
-    })
+  const {
+    isApproving,
+    isApproved,
+    isConfirmed,
+    isConfirming,
+    handleApprove,
+    handleConfirm,
+  } = useApproveConfirmTransaction({
+    onRequiresApproval: async () => {
+      try {
+        const response = await cakeContract.allowance(account, farmAuctionContract.address)
+        const currentAllowance = ethersToBigNumber(response)
+        return currentAllowance.gt(0)
+      } catch (error) {
+        return false
+      }
+    },
+    onApprove: () => {
+      return callWithGasPrice(cakeContract, 'approve', [farmAuctionContract.address, ethers.constants.MaxUint256])
+    },
+    onApproveSuccess: async ({ receipt }) => {
+      toastSuccess(
+        t('Contract approved - you can now place your bid!'),
+        <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
+      )
+    },
+    onConfirm: () => {
+      const bidAmount = new BigNumber(bid).times(DEFAULT_TOKEN_DECIMAL).toString()
+      return callWithGasPrice(farmAuctionContract, 'bid', [bidAmount])
+    },
+    onSuccess: async ({ receipt }) => {
+      refreshBidders()
+      onDismiss()
+      toastSuccess(t('Bid placed!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+    },
+  })
 
   const handleInputChange = (input: string) => {
     setBid(input)

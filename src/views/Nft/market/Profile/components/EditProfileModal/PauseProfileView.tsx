@@ -9,7 +9,7 @@ import useToast from 'hooks/useToast'
 import { formatBigNumber } from 'utils/formatBalance'
 import { useProfile as useProfileContract } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 
 type PauseProfilePageProps = InjectedModalProps

@@ -7,7 +7,7 @@ import { useTranslation } from 'contexts/Localization'
 import { useCake, useSousChef, useCakeVaultContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import useLastUpdated from 'hooks/useLastUpdated'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 
 export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol) => {

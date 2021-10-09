@@ -10,8 +10,7 @@ import Balance from 'components/Balance'
 import { TicketPurchaseCard } from '../svgs'
 import BuyTicketsButton from './BuyTicketsButton'
 
-const TicketContainer = styled(Flex)`
-`
+const TicketContainer = styled(Flex)``
 
 const PrizeTotalBalance = styled(Balance)`
   background: ${({ theme }) => theme.colors.gradients.gold};
@@ -20,7 +19,7 @@ const PrizeTotalBalance = styled(Balance)`
 `
 
 const StyledBuyTicketButton = styled(BuyTicketsButton)<{ disabled: boolean }>`
-  background: #FDC02A;
+  background: #fdc02a;
   color: #585858;
   border-radius: 12px;
   width: 200px;
@@ -28,9 +27,7 @@ const StyledBuyTicketButton = styled(BuyTicketsButton)<{ disabled: boolean }>`
     width: 240px;
   }
 ` 
-const ButtonWrapper = styled.div`
- 
-`
+const ButtonWrapper = styled.div``
 
 const TicketSvgWrapper = styled.div`
   position: absolute;
@@ -45,7 +42,7 @@ const Decorations = styled.div`
   height: 100%;
   background: url(/images/decorations/loooto.png);
   background-repeat: no-repeat;
-  background-position: center ;
+  background-position: center;
   background-size: cover;
   top: 0;
   left: 0;
@@ -54,12 +51,13 @@ const Decorations = styled.div`
 const Hero = () => {
   const { t } = useTranslation()
   const {
-    currentRound: { amountCollectedInCake, status },
+    currentRound: { amountCollectedInSafemoon, status },
     isTransitioning,
   } = useLottery()
 
+
   const cakePriceBusd = usePriceCakeBusd()
-  const prizeInBusd = amountCollectedInCake.times(cakePriceBusd)
+  const prizeInBusd = amountCollectedInSafemoon.times(cakePriceBusd)
   const prizeTotal = getBalanceNumber(prizeInBusd)
   const ticketBuyIsDisabled = status !== LotteryStatus.OPEN || isTransitioning
 
@@ -89,16 +87,13 @@ const Hero = () => {
     <Flex className="lottery-banner-text" flexDirection="column" alignItems="center" justifyContent="center">
       <Decorations />
      
-       <h3>The Safemoon Lottery <span className="text-color">prize pool</span></h3>
-       {getHeroHeading()}
-     
-     
-      <TicketContainer
-        position="relative"
-        width={['240px', '288px']}
-        alignItems="center"
-        justifyContent="center"
-      >
+      
+      <h3>
+        The Safemoon Lottery <span className="text-color">prize pool</span>
+      </h3>
+      {getHeroHeading()}
+
+      <TicketContainer position="relative" width={['240px', '288px']} alignItems="center" justifyContent="center">
         <ButtonWrapper>
           <StyledBuyTicketButton disabled={ticketBuyIsDisabled} />
         </ButtonWrapper>

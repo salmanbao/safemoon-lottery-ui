@@ -29,7 +29,7 @@ import { DeserializedPool } from 'state/types'
 import { getInterestBreakdown } from 'utils/compoundApyHelpers'
 import RoiCalculatorModal from 'components/RoiCalculatorModal'
 import { ToastDescriptionWithTx } from 'components/Toast'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import { convertCakeToShares, convertSharesToCake } from '../../helpers'
 import FeeSummary from './FeeSummary'
 

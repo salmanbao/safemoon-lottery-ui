@@ -17,20 +17,21 @@ const processViewLotterySuccessResponse = (response, lotteryId: string): Lottery
     status,
     startTime,
     endTime,
-    priceTicketInCake,
-    discountDivisor,
+    priceTicketInSafemoon,
     treasuryFee,
     firstTicketId,
     lastTicketId,
-    amountCollectedInCake,
+    amountCollectedInSafemoon,
     finalNumber,
-    cakePerBracket,
+    safemoonPerBracket,
     countWinnersPerBracket,
     rewardsBreakdown,
   } = response
 
   const statusKey = Object.keys(LotteryStatus)[status]
-  const serializedCakePerBracket = cakePerBracket.map((cakeInBracket) => ethersToSerializedBigNumber(cakeInBracket))
+  const serializedCakePerBracket = safemoonPerBracket.map((safemoonInBracket) =>
+    ethersToSerializedBigNumber(safemoonInBracket),
+  )  
   const serializedCountWinnersPerBracket = countWinnersPerBracket.map((winnersInBracket) =>
     ethersToSerializedBigNumber(winnersInBracket),
   )
@@ -42,14 +43,13 @@ const processViewLotterySuccessResponse = (response, lotteryId: string): Lottery
     status: LotteryStatus[statusKey],
     startTime: startTime?.toString(),
     endTime: endTime?.toString(),
-    priceTicketInCake: ethersToSerializedBigNumber(priceTicketInCake),
-    discountDivisor: discountDivisor?.toString(),
+    priceTicketInSafemoon: ethersToSerializedBigNumber(priceTicketInSafemoon),
     treasuryFee: treasuryFee?.toString(),
     firstTicketId: firstTicketId?.toString(),
     lastTicketId: lastTicketId?.toString(),
-    amountCollectedInCake: ethersToSerializedBigNumber(amountCollectedInCake),
+    amountCollectedInSafemoon: ethersToSerializedBigNumber(amountCollectedInSafemoon),
     finalNumber,
-    cakePerBracket: serializedCakePerBracket,
+    safemoonPerBracket: serializedCakePerBracket,
     countWinnersPerBracket: serializedCountWinnersPerBracket,
     rewardsBreakdown: serializedRewardsBreakdown,
   }
@@ -62,14 +62,13 @@ const processViewLotteryErrorResponse = (lotteryId: string): LotteryResponse => 
     status: LotteryStatus.PENDING,
     startTime: '',
     endTime: '',
-    priceTicketInCake: '',
-    discountDivisor: '',
+    priceTicketInSafemoon: '',
     treasuryFee: '',
     firstTicketId: '',
     lastTicketId: '',
-    amountCollectedInCake: '',
+    amountCollectedInSafemoon: '',
     finalNumber: null,
-    cakePerBracket: [],
+    safemoonPerBracket: [],
     countWinnersPerBracket: [],
     rewardsBreakdown: [],
   }
@@ -138,22 +137,17 @@ export const useProcessLotteryResponse = (
   lotteryData: LotteryResponse & { userTickets?: LotteryRoundUserTickets },
 ): LotteryRound => {
   const {
-    priceTicketInCake: priceTicketInCakeAsString,
-    discountDivisor: discountDivisorAsString,
-    amountCollectedInCake: amountCollectedInCakeAsString,
+    priceTicketInSafemoon: priceTicketInSafemoonAsString,
+    amountCollectedInSafemoon: amountCollectedInSafemoonAsString,
   } = lotteryData
 
-  const discountDivisor = useMemo(() => {
-    return new BigNumber(discountDivisorAsString)
-  }, [discountDivisorAsString])
-
-  const priceTicketInCake = useMemo(() => {
-    return new BigNumber(priceTicketInCakeAsString)
-  }, [priceTicketInCakeAsString])
-
-  const amountCollectedInCake = useMemo(() => {
-    return new BigNumber(amountCollectedInCakeAsString)
-  }, [amountCollectedInCakeAsString])
+  const priceTicketInSafemoon = useMemo(() => {
+    return new BigNumber(priceTicketInSafemoonAsString)
+  }, [priceTicketInSafemoonAsString])
+    
+  const amountCollectedInSafemoon = useMemo(() => {
+    return new BigNumber(amountCollectedInSafemoonAsString)
+  }, [amountCollectedInSafemoonAsString])
 
   return {
     isLoading: lotteryData.isLoading,
@@ -162,14 +156,13 @@ export const useProcessLotteryResponse = (
     status: lotteryData.status,
     startTime: lotteryData.startTime,
     endTime: lotteryData.endTime,
-    priceTicketInCake,
-    discountDivisor,
+    priceTicketInSafemoon,
     treasuryFee: lotteryData.treasuryFee,
     firstTicketId: lotteryData.firstTicketId,
     lastTicketId: lotteryData.lastTicketId,
-    amountCollectedInCake,
+    amountCollectedInSafemoon,
     finalNumber: lotteryData.finalNumber,
-    cakePerBracket: lotteryData.cakePerBracket,
+    safemoonPerBracket: lotteryData.safemoonPerBracket,
     countWinnersPerBracket: lotteryData.countWinnersPerBracket,
     rewardsBreakdown: lotteryData.rewardsBreakdown,
   }

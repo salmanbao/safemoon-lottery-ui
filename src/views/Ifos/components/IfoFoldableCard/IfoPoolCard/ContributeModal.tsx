@@ -10,7 +10,7 @@ import { useTranslation } from 'contexts/Localization'
 import { getBalanceAmount } from 'utils/formatBalance'
 import ApproveConfirmButtons from 'components/ApproveConfirmButtons'
 import useApproveConfirmTransaction from 'hooks/useApproveConfirmTransaction'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useERC20 } from 'hooks/useContract'
 
@@ -52,30 +52,36 @@ const ContributeModal: React.FC<Props> = ({
   const { t } = useTranslation()
   const valueWithTokenDecimals = new BigNumber(value).times(DEFAULT_TOKEN_DECIMAL)
 
-  const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
-    useApproveConfirmTransaction({
-      onRequiresApproval: async () => {
-        try {
-          const response = await raisingTokenContract.allowance(account, contract.address)
-          const currentAllowance = new BigNumber(response.toString())
-          return currentAllowance.gt(0)
-        } catch (error) {
-          return false
-        }
-      },
-      onApprove: () => {
-        return callWithGasPrice(raisingTokenContract, 'approve', [contract.address, ethers.constants.MaxUint256], {
+  const {
+    isApproving,
+    isApproved,
+    isConfirmed,
+    isConfirming,
+    handleApprove,
+    handleConfirm,
+  } = useApproveConfirmTransaction({
+    onRequiresApproval: async () => {
+      try {
+        const response = await raisingTokenContract.allowance(account, contract.address)
+        const currentAllowance = new BigNumber(response.toString())
+        return currentAllowance.gt(0)
+      } catch (error) {
+        return false
+      }
+    },
+    onApprove: () => {
+      return callWithGasPrice(raisingTokenContract, 'approve', [contract.address, ethers.constants.MaxUint256], {
+        gasPrice,
+      })
+    },
+    onConfirm: () => {
+      return callWithGasPrice(
+        contract,
+        'depositPool',
+        [valueWithTokenDecimals.toString(), poolId === PoolIds.poolBasic ? 0 : 1],
+        {
           gasPrice,
-        })
-      },
-      onConfirm: () => {
-        return callWithGasPrice(
-          contract,
-          'depositPool',
-          [valueWithTokenDecimals.toString(), poolId === PoolIds.poolBasic ? 0 : 1],
-          {
-            gasPrice,
-          },
+        },
         )
       },
       onSuccess: async ({ receipt }) => {

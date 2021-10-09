@@ -3,7 +3,7 @@ import { AutoRenewIcon, Button, ButtonProps } from '@pancakeswap/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { usePredictionsContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 
 interface ReclaimPositionButtonProps extends ButtonProps {

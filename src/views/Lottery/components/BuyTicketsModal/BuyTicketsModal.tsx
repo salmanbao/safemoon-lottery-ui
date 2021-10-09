@@ -27,7 +27,7 @@ import useTheme from 'hooks/useTheme'
 import useTokenBalance, { FetchStatus } from 'hooks/useTokenBalance'
 import useApproveConfirmTransaction from 'hooks/useApproveConfirmTransaction'
 import { useCake, useLotteryV2Contract } from 'hooks/useContract'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import useToast from 'hooks/useToast'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { ToastDescriptionWithTx } from 'components/Toast'
@@ -61,12 +61,12 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
   const { account } = useWeb3React()
   const { t } = useTranslation()
   const { theme } = useTheme()
+  const discountDivisor = useMemo(() => new BigNumber(300), [])
   const {
     maxNumberTicketsPerBuyOrClaim,
     currentLotteryId,
     currentRound: {
-      priceTicketInCake,
-      discountDivisor,
+      priceTicketInSafemoon,
       userTickets: { tickets: userCurrentTickets },
     },
   } = useLottery()
@@ -118,25 +118,25 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
 
   const getTicketCostAfterDiscount = useCallback(
     (numberTickets: BigNumber) => {
-      const totalAfterDiscount = priceTicketInCake
+      const totalAfterDiscount = priceTicketInSafemoon
         .times(numberTickets)
         .times(discountDivisor.plus(1).minus(numberTickets))
         .div(discountDivisor)
       return totalAfterDiscount
     },
-    [discountDivisor, priceTicketInCake],
+    [discountDivisor, priceTicketInSafemoon],
   )
 
   const getMaxTicketBuyWithDiscount = useCallback(
     (numberTickets: BigNumber) => {
       const costAfterDiscount = getTicketCostAfterDiscount(numberTickets)
-      const costBeforeDiscount = priceTicketInCake.times(numberTickets)
+      const costBeforeDiscount = priceTicketInSafemoon.times(numberTickets)
       const discountAmount = costBeforeDiscount.minus(costAfterDiscount)
-      const ticketsBoughtWithDiscount = discountAmount.div(priceTicketInCake)
+      const ticketsBoughtWithDiscount = discountAmount.div(priceTicketInSafemoon)
       const overallTicketBuy = numberTickets.plus(ticketsBoughtWithDiscount)
       return { overallTicketBuy, ticketsBoughtWithDiscount }
     },
-    [getTicketCostAfterDiscount, priceTicketInCake],
+    [getTicketCostAfterDiscount, priceTicketInSafemoon],
   )
 
   const validateInput = useCallback(
@@ -158,7 +158,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
 
   useEffect(() => {
     const getMaxPossiblePurchase = () => {
-      const maxBalancePurchase = memoisedUserCake.div(priceTicketInCake)
+      const maxBalancePurchase = memoisedUserCake.div(priceTicketInSafemoon)
       const limitedMaxPurchase = limitNumberByMaxTicketsPerBuy(maxBalancePurchase)
       let maxPurchase
 
@@ -168,8 +168,9 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
         const { overallTicketBuy: maxPlusDiscountTickets } = getMaxTicketBuyWithDiscount(limitedMaxPurchase)
 
         // Knowing how many tickets they can buy when counting the discount - plug that total in, and see how much that total will get discounted
-        const { ticketsBoughtWithDiscount: secondTicketDiscountBuy } =
-          getMaxTicketBuyWithDiscount(maxPlusDiscountTickets)
+        const { ticketsBoughtWithDiscount: secondTicketDiscountBuy } = getMaxTicketBuyWithDiscount(
+          maxPlusDiscountTickets,
+        )
 
         // Add the additional tickets that can be bought with the discount, to the original max purchase
         maxPurchase = limitedMaxPurchase.plus(secondTicketDiscountBuy)
@@ -188,7 +189,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     getMaxPossiblePurchase()
   }, [
     maxNumberTicketsPerBuyOrClaim,
-    priceTicketInCake,
+    priceTicketInSafemoon,
     memoisedUserCake,
     limitNumberByMaxTicketsPerBuy,
     getTicketCostAfterDiscount,
@@ -199,12 +200,12 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
   useEffect(() => {
     const numberOfTicketsToBuy = new BigNumber(ticketsToBuy)
     const costAfterDiscount = getTicketCostAfterDiscount(numberOfTicketsToBuy)
-    const costBeforeDiscount = priceTicketInCake.times(numberOfTicketsToBuy)
+    const costBeforeDiscount = priceTicketInSafemoon.times(numberOfTicketsToBuy)
     const discountBeingApplied = costBeforeDiscount.minus(costAfterDiscount)
     setTicketCostBeforeDiscount(costBeforeDiscount.gt(0) ? getFullDisplayBalance(costBeforeDiscount) : '0')
     setTotalCost(costAfterDiscount.gt(0) ? getFullDisplayBalance(costAfterDiscount) : '0')
     setDiscountValue(discountBeingApplied.gt(0) ? getFullDisplayBalance(discountBeingApplied, 18, 5) : '0')
-  }, [ticketsToBuy, priceTicketInCake, discountDivisor, getTicketCostAfterDiscount])
+  }, [ticketsToBuy, priceTicketInSafemoon, discountDivisor, getTicketCostAfterDiscount])
 
   const getNumTicketsByPercentage = (percentage: number): number => {
     const percentageOfMaxTickets = maxPossibleTicketPurchase.gt(0)
@@ -238,36 +239,42 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     userCurrentTickets,
   )
 
-  const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
-    useApproveConfirmTransaction({
-      onRequiresApproval: async () => {
-        try {
-          const response = await cakeContract.allowance(account, lotteryContract.address)
-          const currentAllowance = ethersToBigNumber(response)
-          return currentAllowance.gt(0)
-        } catch (error) {
-          return false
-        }
-      },
-      onApprove: () => {
-        return callWithGasPrice(cakeContract, 'approve', [lotteryContract.address, ethers.constants.MaxUint256])
-      },
-      onApproveSuccess: async ({ receipt }) => {
-        toastSuccess(
-          t('Contract enabled - you can now purchase tickets'),
-          <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
-        )
-      },
-      onConfirm: () => {
-        const ticketsForPurchase = getTicketsForPurchase()
-        return callWithGasPrice(lotteryContract, 'buyTickets', [currentLotteryId, ticketsForPurchase])
-      },
-      onSuccess: async ({ receipt }) => {
-        onDismiss()
-        dispatch(fetchUserTicketsAndLotteries({ account, currentLotteryId }))
-        toastSuccess(t('Lottery tickets purchased!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-      },
-    })
+  const {
+    isApproving,
+    isApproved,
+    isConfirmed,
+    isConfirming,
+    handleApprove,
+    handleConfirm,
+  } = useApproveConfirmTransaction({
+    onRequiresApproval: async () => {
+      try {
+        const response = await cakeContract.allowance(account, lotteryContract.address)
+        const currentAllowance = ethersToBigNumber(response)
+        return currentAllowance.gt(0)
+      } catch (error) {
+        return false
+      }
+    },
+    onApprove: () => {
+      return callWithGasPrice(cakeContract, 'approve', [lotteryContract.address, ethers.constants.MaxUint256])
+    },
+    onApproveSuccess: async ({ receipt }) => {
+      toastSuccess(
+        t('Contract enabled - you can now purchase tickets'),
+        <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
+      )
+    },
+    onConfirm: () => {
+      const ticketsForPurchase = getTicketsForPurchase()
+      return callWithGasPrice(lotteryContract, 'buyTickets', [currentLotteryId, ticketsForPurchase])
+    },
+    onSuccess: async ({ receipt }) => {
+      onDismiss()
+      dispatch(fetchUserTicketsAndLotteries({ account, currentLotteryId }))
+      toastSuccess(t('Lottery tickets purchased!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+    },
+  })
 
   const getErrorMessage = () => {
     if (userNotEnoughCake) return t('Insufficient SAFEMOON balance')
@@ -326,7 +333,10 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
         onUserInput={handleInputChange}
         currencyValue={
           cakePriceBusd.gt(0) &&
-          `~${ticketsToBuy ? getFullDisplayBalance(priceTicketInCake.times(new BigNumber(ticketsToBuy))) : '0.00'} SAFEMOON`
+          `~${
+            ticketsToBuy ? getFullDisplayBalance(priceTicketInSafemoon.times(new BigNumber(ticketsToBuy))) : '0.00'
+          } SAFEMOON`
+
         }
       />
       <Flex alignItems="center" justifyContent="flex-end" mt="4px" mb="12px">
@@ -385,7 +395,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
             {t('Cost')} (SAFEMOON)
           </Text>
           <Text color="textSubtle" fontSize="14px">
-            {priceTicketInCake && getFullDisplayBalance(priceTicketInCake.times(ticketsToBuy || 0))} SAFEMOON
+          {priceTicketInSafemoon && getFullDisplayBalance(priceTicketInSafemoon.times(ticketsToBuy || 0))} SAFEMOON
           </Text>
         </Flex>
         <Flex mb="8px" justifyContent="space-between">

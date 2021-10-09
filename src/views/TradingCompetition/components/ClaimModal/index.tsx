@@ -15,7 +15,7 @@ import {
 import { useTranslation } from 'contexts/Localization'
 import { useTradingCompetitionContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import useCallWithGasPrice from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { useCompetitionCakeRewards, getRewardGroupAchievements } from '../../helpers'
 import { CompetitionProps } from '../../types'
