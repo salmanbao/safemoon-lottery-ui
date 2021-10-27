@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 // import { Link } from 'react-router-dom'
-import { Flex, Heading,Text, Link, Button } from '@pancakeswap/uikit'
+import { Flex, Heading, Text, Link, Button } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { useTranslation } from 'contexts/Localization'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -102,19 +102,25 @@ const Hero = () => {
         flexDirection={['column-reverse', null, null, 'row']}
         alignItems={['flex-end', null, null, 'center']}
         justifyContent="center"
-        
       >
         <Flex className="banner-content" flex="1" flexDirection="column">
           <Heading className="section-heading" scale="xl" color="white" mb="24px">
-            <p>Help the Safemoon burn and win a slice of the prize pool with our <span className="text-color">safemoon lottery</span></p>
+            <p>
+              Help the Safemoon burn and win a slice of the prize pool with our{' '}
+              <span className="text-color">safemoon lottery</span>
+            </p>
           </Heading>
           <Text className="heading-descr" color="white">
-            {t('Buy your lottery tickets using Safemoon and be in with the chance to increase your Safemoon bag whilst helping the community burn the total supply. The cost of a lottery ticket is $5 (paid in Safemoon). 70% of the total ticket purchases go to the Prize pool to be redistributed amongst the winners, 25% of the total ticket purchases go to the Official Safemoon Burn Wallet and 5% go to a “Funding Wallet” which we will use to grow this and other Safemoon related projects.')}
+            {t(
+              'Buy your lottery tickets using Safemoon and be in with the chance to increase your Safemoon bag whilst helping the community burn the total supply. The cost of a lottery ticket is $5 (paid in Safemoon). 70% of the total ticket purchases go to the Prize pool to be redistributed amongst the winners, 25% of the total ticket purchases go to the Official Safemoon Burn Wallet and 5% go to a “Funding Wallet” which we will use to grow this and other Safemoon related projects.',
+            )}
           </Text>
           <Flex justifyContent={['start', null, null, null]}>
             {!account && <ConnectWalletButton mr="8px" />}
             <Link mr="16px" href="/lottery">
-              <Button className="custom-btn" variant={!account ? 'secondary' : 'primary'}>{t('How to Play')}</Button>
+              <Button className="custom-btn" variant={!account ? 'secondary' : 'primary'}>
+                {t('How to Play')}
+              </Button>
             </Link>
           </Flex>
         </Flex>
@@ -124,7 +130,7 @@ const Hero = () => {
           flex={[null, null, null, '1']}
           mb={['24px', null, null, '0']}
           position="relative"
-          display={['none !important', null,null,'block !important']}
+          display={['none !important', null, null, 'block !important']}
         >
           <BunnyWrapper>
             <img src={`${imagePath}${imageSrc}.png`} srcSet={getSrcSet(imagePath, imageSrc)} alt={t('Lunar bunny')} />

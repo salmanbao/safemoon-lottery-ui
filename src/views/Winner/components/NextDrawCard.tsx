@@ -135,10 +135,12 @@ const NextDrawCard = () => {
 
   return (
     <StyledCard>
-      <CardHeader style={{background: '#DDDDDD'}} p="16px 24px">
+      <CardHeader style={{ background: '#DDDDDD' }} p="16px 24px">
         <Flex justifyContent="space-between">
-          <Heading style={{color: '#585858'}} mr="12px">{t('Next Draw')}</Heading>
-          <Text style={{color: '#585858'}} >
+          <Heading style={{ color: '#585858' }} mr="12px">
+            {t('Next Draw')}
+          </Heading>
+          <Text style={{ color: '#585858' }}>
             {currentLotteryId && `#${getNextDrawId()}`} {Boolean(endTime) && getNextDrawDateTime()}
           </Text>
         </Flex>

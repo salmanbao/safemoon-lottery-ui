@@ -11,13 +11,13 @@ import TwitterIcon from '../../../assets/images/twitter.svg'
 import TelegramIcon from '../../../assets/images/telegram.svg'
 
 const Wrapper = styled(Flex)`
-.footer-wrapper{
-  .footer-links{
-    .link{
-      color: #fff;
+  .footer-wrapper {
+    .footer-links {
+      .link {
+        color: #fff;
+      }
     }
   }
-}
 `
 
 const Footer = () => {
@@ -26,30 +26,55 @@ const Footer = () => {
 
   return (
     <>
-    <Wrapper>
-        <Flex className="footer-wrapper" flexDirection={['column', null, null, 'row']} alignItems="center" justifyContent="space-between" width="100%" height="100%">
-          <Flex className="footer-links" flexDirection={['column', null, null, 'row']} alignItems="center" justifyContent="space-between" width="100%" height="100%">
-            <Text mb={['60px',null,null,'0']} mt={['40px',null,null,'0']}><a className="link" href="/">Home</a></Text>
-            <Text mb={['60px',null,null,'0']}><a className="link" href="/lottery">Lottery</a></Text>
-            <Text mb={['60px',null,null,'0']}><a className="link" href="/winners">Winners</a></Text>
+      <Wrapper>
+        <Flex
+          className="footer-wrapper"
+          flexDirection={['column', null, null, 'row']}
+          alignItems="center"
+          justifyContent="space-between"
+          width="100%"
+          height="100%"
+        >
+          <Flex
+            className="footer-links"
+            flexDirection={['column', null, null, 'row']}
+            alignItems="center"
+            justifyContent="space-between"
+            width="100%"
+            height="100%"
+          >
+            <Text mb={['60px', null, null, '0']} mt={['40px', null, null, '0']}>
+              <a className="link" href="/">
+                Home
+              </a>
+            </Text>
+            <Text mb={['60px', null, null, '0']}>
+              <a className="link" href="/lottery">
+                Lottery
+              </a>
+            </Text>
+            <Text mb={['60px', null, null, '0']}>
+              <a className="link" href="/winners">
+                Winners
+              </a>
+            </Text>
             {/* <Text mb={['60px',null,null,'0']}><a className="link" href="/faq">FAQ</a></Text> */}
           </Flex>
-          
+
           <div className="social-links">
-          <ul>
-            <li>
-              <a href="/">
-              <img src={TwitterIcon} alt="" className="icon" />
-              </a>
-            </li>
-            <li>
-              <a href="/">
-              <img src={TelegramIcon} alt="" className="icon" />
-              </a>
-            </li>
-          </ul>
+            <ul>
+              <li>
+                <a href="/">
+                  <img src={TwitterIcon} alt="" className="icon" />
+                </a>
+              </li>
+              <li>
+                <a href="/">
+                  <img src={TelegramIcon} alt="" className="icon" />
+                </a>
+              </li>
+            </ul>
           </div>
-          
         </Flex>
       </Wrapper>
       {/* <BgWrapper>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Heading, Flex, useModal, AutoRenewIcon,Text } from '@pancakeswap/uikit'
+import { Button, Heading, Flex, useModal, AutoRenewIcon, Text } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { LotteryStatus } from 'config/constants/types'
 import { useTranslation } from 'contexts/Localization'
@@ -65,13 +65,13 @@ const CheckPrizesSection = () => {
     if (!account) {
       return (
         <Flex className="connect-section" alignItems="center" justifyContent="center">
-          
           <Flex mx={['4px', null, '16px']} flexDirection="column" alignItems="center">
-            <h3>Connect your wallet to check if you have <span className="text-color" >won!</span></h3>
-             
+            <h3>
+              Connect your wallet to check if you have <span className="text-color">won!</span>
+            </h3>
+
             <ConnectWalletButton width="190px" />
           </Flex>
-          
         </Flex>
       )
     }

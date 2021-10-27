@@ -3,13 +3,43 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_cakeTokenAddress",
+        "name": "_safemoonTokenAddress",
         "type": "address"
       },
       {
         "internalType": "address",
         "name": "_randomGeneratorAddress",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_burnWallet",
+        "type": "address"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_bucketOneMaxNumber",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_bucketTwoMaxNumber",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_discountForBucketOne",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_discountForBucketTwo",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_discountForBucketThree",
+        "type": "uint8"
       }
     ],
     "stateMutability": "nonpayable",
@@ -121,7 +151,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "priceTicketInCake",
+        "name": "priceTicketInSafemoon",
         "type": "uint256"
       },
       {
@@ -254,6 +284,62 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "bucketOneMax",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "bucketTwoMax",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "discountForBucketOne",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "discountForBucketTwo",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "discountForBucketThree",
+        "type": "uint8"
+      }
+    ],
+    "name": "UpdatedBuckets",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_BURN_FEE",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "MAX_LENGTH_LOTTERY",
     "outputs": [
@@ -281,7 +367,7 @@
   },
   {
     "inputs": [],
-    "name": "MIN_DISCOUNT_DIVISOR",
+    "name": "MIN_LENGTH_LOTTERY",
     "outputs": [
       {
         "internalType": "uint256",
@@ -294,12 +380,38 @@
   },
   {
     "inputs": [],
-    "name": "MIN_LENGTH_LOTTERY",
+    "name": "bucketOneMax_",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint8",
         "name": "",
-        "type": "uint256"
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bucketTwoMax_",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "burnWallet_",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -324,25 +436,7 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "cakeToken",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_discountDivisor",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "_priceTicket",
@@ -362,7 +456,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -441,6 +535,45 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "discountForBucketOne_",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "discountForBucketThree_",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "discountForBucketTwo_",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -504,7 +637,7 @@
   },
   {
     "inputs": [],
-    "name": "maxPriceTicketInCake",
+    "name": "maxPriceTicketInSafemoon",
     "outputs": [
       {
         "internalType": "uint256",
@@ -517,7 +650,7 @@
   },
   {
     "inputs": [],
-    "name": "minPriceTicketInCake",
+    "name": "minPriceTicketInSafemoon",
     "outputs": [
       {
         "internalType": "uint256",
@@ -606,6 +739,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "safemoonToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -622,16 +768,16 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_minPriceTicketInCake",
+        "name": "_minPriceTicketInSafemoon",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_maxPriceTicketInCake",
+        "name": "_maxPriceTicketInSafemoon",
         "type": "uint256"
       }
     ],
-    "name": "setMinAndMaxTicketPriceInCake",
+    "name": "setMinAndMaxTicketPriceInSafemoon",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -668,12 +814,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_priceTicketInCake",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_discountDivisor",
+        "name": "_priceTicketInSafemoon",
         "type": "uint256"
       },
       {
@@ -719,6 +860,39 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "_bucketOneMax",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_bucketTwoMax",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_discountForBucketOne",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_discountForBucketTwo",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_discountForBucketThree",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateBuckets",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "viewCurrentLotteryId",
     "outputs": [
@@ -744,7 +918,7 @@
       {
         "components": [
           {
-            "internalType": "enum PancakeSwapLottery.Status",
+            "internalType": "enum SafemoonLottery.Status",
             "name": "status",
             "type": "uint8"
           },
@@ -760,12 +934,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "priceTicketInCake",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "discountDivisor",
+            "name": "priceTicketInSafemoon",
             "type": "uint256"
           },
           {
@@ -780,7 +949,7 @@
           },
           {
             "internalType": "uint256[6]",
-            "name": "cakePerBracket",
+            "name": "safemoonPerBracket",
             "type": "uint256[6]"
           },
           {
@@ -800,7 +969,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "amountCollectedInCake",
+            "name": "amountCollectedInSafemoon",
             "type": "uint256"
           },
           {
@@ -809,7 +978,7 @@
             "type": "uint32"
           }
         ],
-        "internalType": "struct PancakeSwapLottery.Lottery",
+        "internalType": "struct SafemoonLottery.Lottery",
         "name": "",
         "type": "tuple"
       }

@@ -17,7 +17,7 @@ const PreviousRoundCardFooter: React.FC<PreviousRoundCardFooterProps> = ({ lotte
     <CardFooter p="0">
       {/* {isExpanded &&  */}
       <FooterExpanded lotteryNodeData={lotteryNodeData} lotteryId={lotteryId} />
-       {/* } */}
+      {/* } */}
       <Flex p="8px 24px" alignItems="center" justifyContent="center">
         {/* <ExpandableLabel expanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}>
           {isExpanded ? t('Hide') : t('Details')}

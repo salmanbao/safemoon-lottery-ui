@@ -31,7 +31,7 @@ const processViewLotterySuccessResponse = (response, lotteryId: string): Lottery
   const statusKey = Object.keys(LotteryStatus)[status]
   const serializedCakePerBracket = safemoonPerBracket.map((safemoonInBracket) =>
     ethersToSerializedBigNumber(safemoonInBracket),
-  )  
+  )
   const serializedCountWinnersPerBracket = countWinnersPerBracket.map((winnersInBracket) =>
     ethersToSerializedBigNumber(winnersInBracket),
   )
@@ -144,7 +144,7 @@ export const useProcessLotteryResponse = (
   const priceTicketInSafemoon = useMemo(() => {
     return new BigNumber(priceTicketInSafemoonAsString)
   }, [priceTicketInSafemoonAsString])
-    
+
   const amountCollectedInSafemoon = useMemo(() => {
     return new BigNumber(amountCollectedInSafemoonAsString)
   }, [amountCollectedInSafemoonAsString])

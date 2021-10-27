@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex , Text} from '@pancakeswap/uikit'
+import { Flex, Text } from '@pancakeswap/uikit'
 import PageSection from 'components/PageSection'
 import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
@@ -22,7 +22,7 @@ import PancakeSquadBanner from './components/Banners/PancakeSquadBanner'
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
   padding-bottom: 0;
-  > div{
+  > div {
     padding-bottom: 0;
   }
   ${({ theme }) => theme.mediaQueries.md} {
@@ -48,12 +48,12 @@ const UserBannerWrapper = styled(Container)`
 const BannerBottom = styled.div`
   background-color: #454545;
   padding: 30px 0;
-  .text{
+  .text {
     color: #fff;
     font-size: 24px;
   }
-  @media screen and (max-width: 851px){
-    display:none;
+  @media screen and (max-width: 851px) {
+    display: none;
   }
 `
 
@@ -69,11 +69,7 @@ const Home: React.FC = () => {
       <PageMeta />
       <StyledHeroSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
-        background={
-          theme.isDark
-            ? 'transparent'
-            : 'transparent'
-        }
+        background={theme.isDark ? 'transparent' : 'transparent'}
         index={2}
         hasCurvedDivider={false}
       >
@@ -93,7 +89,6 @@ const Home: React.FC = () => {
       </StyledHeroSection>
       <BannerBottom>
         <Container width="100%">
-          
           <Flex alignItems="center" justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
             <Text className="text">70% Prize Pool</Text>
             <Text className="text">25% Burn Wallet</Text>
@@ -103,11 +98,7 @@ const Home: React.FC = () => {
       </BannerBottom>
       <PageSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
-        background={
-          theme.isDark
-            ? 'transparent'
-            : 'transparent'
-        }
+        background={theme.isDark ? 'transparent' : 'transparent'}
         index={2}
         hasCurvedDivider={false}
       >
@@ -115,11 +106,7 @@ const Home: React.FC = () => {
       </PageSection>
       <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
-        background={
-          theme.isDark
-            ? 'transparent'
-            : 'transparent'
-        }
+        background={theme.isDark ? 'transparent' : 'transparent'}
         index={2}
         hasCurvedDivider={false}
       >
@@ -165,7 +152,8 @@ const Home: React.FC = () => {
         <SalesSection {...cakeSectionData} />
         <CakeDataRow />
       </PageSection> */}
-      <PageSection className="footer-section"
+      <PageSection
+        className="footer-section"
         innerProps={{ style: FooterContainerStyles }}
         background="#434343"
         index={2}

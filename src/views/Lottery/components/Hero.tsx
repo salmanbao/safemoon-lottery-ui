@@ -26,7 +26,7 @@ const StyledBuyTicketButton = styled(BuyTicketsButton)<{ disabled: boolean }>`
   ${({ theme }) => theme.mediaQueries.xs} {
     width: 240px;
   }
-` 
+`
 const ButtonWrapper = styled.div``
 
 const TicketSvgWrapper = styled.div`
@@ -54,7 +54,6 @@ const Hero = () => {
     currentRound: { amountCollectedInSafemoon, status },
     isTransitioning,
   } = useLottery()
-
 
   const cakePriceBusd = usePriceCakeBusd()
   const prizeInBusd = amountCollectedInSafemoon.times(cakePriceBusd)
@@ -86,8 +85,7 @@ const Hero = () => {
   return (
     <Flex className="lottery-banner-text" flexDirection="column" alignItems="center" justifyContent="center">
       <Decorations />
-     
-      
+
       <h3>
         The Safemoon Lottery <span className="text-color">prize pool</span>
       </h3>
@@ -97,7 +95,6 @@ const Hero = () => {
         <ButtonWrapper>
           <StyledBuyTicketButton disabled={ticketBuyIsDisabled} />
         </ButtonWrapper>
-      
       </TicketContainer>
     </Flex>
   )

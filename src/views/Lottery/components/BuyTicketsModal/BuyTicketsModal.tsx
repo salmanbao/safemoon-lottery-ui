@@ -168,9 +168,8 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
         const { overallTicketBuy: maxPlusDiscountTickets } = getMaxTicketBuyWithDiscount(limitedMaxPurchase)
 
         // Knowing how many tickets they can buy when counting the discount - plug that total in, and see how much that total will get discounted
-        const { ticketsBoughtWithDiscount: secondTicketDiscountBuy } = getMaxTicketBuyWithDiscount(
-          maxPlusDiscountTickets,
-        )
+        const { ticketsBoughtWithDiscount: secondTicketDiscountBuy } =
+          getMaxTicketBuyWithDiscount(maxPlusDiscountTickets)
 
         // Add the additional tickets that can be bought with the discount, to the original max purchase
         maxPurchase = limitedMaxPurchase.plus(secondTicketDiscountBuy)
@@ -239,42 +238,36 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
     userCurrentTickets,
   )
 
-  const {
-    isApproving,
-    isApproved,
-    isConfirmed,
-    isConfirming,
-    handleApprove,
-    handleConfirm,
-  } = useApproveConfirmTransaction({
-    onRequiresApproval: async () => {
-      try {
-        const response = await cakeContract.allowance(account, lotteryContract.address)
-        const currentAllowance = ethersToBigNumber(response)
-        return currentAllowance.gt(0)
-      } catch (error) {
-        return false
-      }
-    },
-    onApprove: () => {
-      return callWithGasPrice(cakeContract, 'approve', [lotteryContract.address, ethers.constants.MaxUint256])
-    },
-    onApproveSuccess: async ({ receipt }) => {
-      toastSuccess(
-        t('Contract enabled - you can now purchase tickets'),
-        <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
-      )
-    },
-    onConfirm: () => {
-      const ticketsForPurchase = getTicketsForPurchase()
-      return callWithGasPrice(lotteryContract, 'buyTickets', [currentLotteryId, ticketsForPurchase])
-    },
-    onSuccess: async ({ receipt }) => {
-      onDismiss()
-      dispatch(fetchUserTicketsAndLotteries({ account, currentLotteryId }))
-      toastSuccess(t('Lottery tickets purchased!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-    },
-  })
+  const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } =
+    useApproveConfirmTransaction({
+      onRequiresApproval: async () => {
+        try {
+          const response = await cakeContract.allowance(account, lotteryContract.address)
+          const currentAllowance = ethersToBigNumber(response)
+          return currentAllowance.gt(0)
+        } catch (error) {
+          return false
+        }
+      },
+      onApprove: () => {
+        return callWithGasPrice(cakeContract, 'approve', [lotteryContract.address, ethers.constants.MaxUint256])
+      },
+      onApproveSuccess: async ({ receipt }) => {
+        toastSuccess(
+          t('Contract enabled - you can now purchase tickets'),
+          <ToastDescriptionWithTx txHash={receipt.transactionHash} />,
+        )
+      },
+      onConfirm: () => {
+        const ticketsForPurchase = getTicketsForPurchase()
+        return callWithGasPrice(lotteryContract, 'buyTickets', [currentLotteryId, ticketsForPurchase])
+      },
+      onSuccess: async ({ receipt }) => {
+        onDismiss()
+        dispatch(fetchUserTicketsAndLotteries({ account, currentLotteryId }))
+        toastSuccess(t('Lottery tickets purchased!'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
+      },
+    })
 
   const getErrorMessage = () => {
     if (userNotEnoughCake) return t('Insufficient SAFEMOON balance')
@@ -336,7 +329,6 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
           `~${
             ticketsToBuy ? getFullDisplayBalance(priceTicketInSafemoon.times(new BigNumber(ticketsToBuy))) : '0.00'
           } SAFEMOON`
-
         }
       />
       <Flex alignItems="center" justifyContent="flex-end" mt="4px" mb="12px">
@@ -349,7 +341,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
           {account && (
             <Flex justifyContent="flex-end">
               <Text fontSize="12px" color="textSubtle" mr="4px">
-              SAFEMOON {t('Balance')}:
+                SAFEMOON {t('Balance')}:
               </Text>
               {hasFetchedBalance ? (
                 <Text fontSize="12px" color="textSubtle">
@@ -395,7 +387,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
             {t('Cost')} (SAFEMOON)
           </Text>
           <Text color="textSubtle" fontSize="14px">
-          {priceTicketInSafemoon && getFullDisplayBalance(priceTicketInSafemoon.times(ticketsToBuy || 0))} SAFEMOON
+            {priceTicketInSafemoon && getFullDisplayBalance(priceTicketInSafemoon.times(ticketsToBuy || 0))} SAFEMOON
           </Text>
         </Flex>
         <Flex mb="8px" justifyContent="space-between">

@@ -49,42 +49,42 @@ const Lottery = () => {
       <PageSection className="lottery-banner" background={TITLE_BG} index={1} hasCurvedDivider={false}>
         <Hero />
         {status === LotteryStatus.OPEN && (
-            <Heading className="tickets" scale="lg" color="#ffffff" mt="50px" mb="24px" textAlign="center">
-              {t('Get your tickets now!')}
-            </Heading>
+          <Heading className="tickets" scale="lg" color="#ffffff" mt="50px" mb="24px" textAlign="center">
+            {t('Get your tickets now!')}
+          </Heading>
+        )}
+        <Flex alignItems="center" justifyContent="center" mb="48px">
+          {nextEventTime && (postCountdownText || preCountdownText) ? (
+            <Countdown
+              nextEventTime={nextEventTime}
+              postCountdownText={postCountdownText}
+              preCountdownText={preCountdownText}
+            />
+          ) : (
+            <Skeleton height="41px" width="250px" />
           )}
-          <Flex alignItems="center" justifyContent="center" mb="48px">
-            {nextEventTime && (postCountdownText || preCountdownText) ? (
-              <Countdown
-                nextEventTime={nextEventTime}
-                postCountdownText={postCountdownText}
-                preCountdownText={preCountdownText}
-              />
-            ) : (
-              <Skeleton height="41px" width="250px" />
-            )}
-          </Flex>
+        </Flex>
       </PageSection>
-      <PageSection className="banner-bottom"
+      <PageSection
+        className="banner-bottom"
         containerProps={{ style: { marginTop: '-30px' } }}
         background={GET_TICKETS_BG}
         hasCurvedDivider={false}
         index={2}
       >
         <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
-          
           <NextDrawCard />
         </Flex>
       </PageSection>
-      
-      
-      <PageSection className="footer-section"
+
+      <PageSection
+        className="footer-section"
         innerProps={{ style: FooterContainerStyles }}
         background="#434343"
         index={2}
         hasCurvedDivider={false}
       >
-        <Footer/>
+        <Footer />
       </PageSection>
     </LotteryPage>
   )

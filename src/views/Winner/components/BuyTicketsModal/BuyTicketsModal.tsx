@@ -328,7 +328,8 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
           cakePriceBusd.gt(0) &&
           `~${
             ticketsToBuy ? getFullDisplayBalance(priceTicketInSafemoon.times(new BigNumber(ticketsToBuy))) : '0.00'
-          } SAFEMOON`        }
+          } SAFEMOON`
+        }
       />
       <Flex alignItems="center" justifyContent="flex-end" mt="4px" mb="12px">
         <Flex justifyContent="flex-end" flexDirection="column">
@@ -340,7 +341,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
           {account && (
             <Flex justifyContent="flex-end">
               <Text fontSize="12px" color="textSubtle" mr="4px">
-              SAFEMOON {t('Balance')}:
+                SAFEMOON {t('Balance')}:
               </Text>
               {hasFetchedBalance ? (
                 <Text fontSize="12px" color="textSubtle">
@@ -386,7 +387,7 @@ const BuyTicketsModal: React.FC<BuyTicketsModalProps> = ({ onDismiss }) => {
             {t('Cost')} (SAFEMOON)
           </Text>
           <Text color="textSubtle" fontSize="14px">
-          {priceTicketInSafemoon && getFullDisplayBalance(priceTicketInSafemoon.times(ticketsToBuy || 0))} SAFEMOON
+            {priceTicketInSafemoon && getFullDisplayBalance(priceTicketInSafemoon.times(ticketsToBuy || 0))} SAFEMOON
           </Text>
         </Flex>
         <Flex mb="8px" justifyContent="space-between">

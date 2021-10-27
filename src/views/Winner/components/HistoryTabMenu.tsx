@@ -8,11 +8,10 @@ const HistoryTabMenu = ({ setActiveIndex, activeIndex }) => {
   return (
     <div className="swtich-tab">
       <ButtonMenu activeIndex={activeIndex} onItemClick={setActiveIndex} scale="md" variant="subtle">
-      <ButtonMenuItem>{t('All History')}</ButtonMenuItem>
-      <ButtonMenuItem>{t('Your History')}</ButtonMenuItem>
-    </ButtonMenu>
+        <ButtonMenuItem>{t('All History')}</ButtonMenuItem>
+        <ButtonMenuItem>{t('Your History')}</ButtonMenuItem>
+      </ButtonMenu>
     </div>
-    
   )
 }
 

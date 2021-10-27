@@ -17,7 +17,7 @@ const StyledTimerFlex = styled(Flex)<{ showTooltip?: boolean }>`
 `
 
 const StyledTimerText = styled(Heading)`
-  background: #FDC02A;
+  background: #fdc02a;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `
@@ -26,25 +26,22 @@ const Wrapper: React.FC<TimerProps> = ({ minutes, hours, days }) => {
   const { t } = useTranslation()
 
   return (
-    <StyledTimerFlex className="time"  alignItems="flex-end">
+    <StyledTimerFlex className="time" alignItems="flex-end">
       {Boolean(days) && (
         <>
-         
-            {days}
-         {t('d  ')}
+          {days}
+          {t('d  ')}
         </>
       )}
       {Boolean(hours) && (
         <>
-         
-            {hours}
+          {hours}
           {t('h  ')}
         </>
       )}
       {Boolean(minutes) && (
         <>
-        
-            {minutes}
+          {minutes}
           {t('m  ')}
         </>
       )}

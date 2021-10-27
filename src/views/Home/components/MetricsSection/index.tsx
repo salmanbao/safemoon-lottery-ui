@@ -45,9 +45,14 @@ const Stats = () => {
       <Heading className="section-heading" fontWeight="300" textAlign="center" color="white" scale="xl">
         {t('How to Play.')}
       </Heading>
-      <div className="heading-descr" >
-      <p>If the digits on your tickets match the winning numbers in the correct order, you win a portion of the prize pool. Simple!</p>
-       <p>If you <span className="text-color">buy multiple</span> lottery tickets you get a discount.</p>
+      <div className="heading-descr">
+        <p>
+          If the digits on your tickets match the winning numbers in the correct order, you win a portion of the prize
+          pool. Simple!
+        </p>
+        <p>
+          If you <span className="text-color">buy multiple</span> lottery tickets you get a discount.
+        </p>
       </div>
       {/* <Flex flexWrap="wrap">
         <Text display="inline" textAlign="center" color="textSubtle" mb="20px">
@@ -62,8 +67,7 @@ const Stats = () => {
       </Text> */}
 
       <Flex className="steps-wrapper" flexDirection={['column', null, null, 'row']}>
-
-        <Flex className="step" flexDirection='column'>
+        <Flex className="step" flexDirection="column">
           <div className="number">Step 1</div>
           <div className="image">
             <img src={Step1} alt="Buy" />
@@ -71,7 +75,7 @@ const Stats = () => {
           <h3>Buy TICKETS</h3>
           <p>Prices are set when the round starts, equal to 5 USD in SAFEMOON per ticket.</p>
         </Flex>
-        <Flex className="step" flexDirection='column'>
+        <Flex className="step" flexDirection="column">
           <div className="number">Step 2</div>
           <div className="image">
             <img src={Step1} alt="Wait" />
@@ -79,7 +83,7 @@ const Stats = () => {
           <h3>Wait for the draw</h3>
           <p>There are two draws every day: one every 12 hours.</p>
         </Flex>
-        <Flex className="step" flexDirection='column'>
+        <Flex className="step" flexDirection="column">
           <div className="number">Step 3</div>
           <div className="image">
             <img src={Step1} alt="Win" />
@@ -109,7 +113,7 @@ const Stats = () => {
           />
         </IconCard> */}
       </Flex>
-      <Flex className="multiple-tickets" flexDirection='column'>
+      <Flex className="multiple-tickets" flexDirection="column">
         <Text className="title">Buy multiple tickets </Text>
         <p>Increase the odds! Buying multiple tickets in a single transaction will give you a discount.</p>
         <ul>

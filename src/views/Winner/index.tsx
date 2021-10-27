@@ -46,8 +46,6 @@ const Winner = () => {
 
   return (
     <LotteryPage>
-      
-      
       <PageSection background={CHECK_PRIZES_BG} hasCurvedDivider={false} index={2}>
         <CheckPrizesSection />
       </PageSection>
@@ -58,7 +56,6 @@ const Winner = () => {
         index={2}
       >
         <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
-          
           <Box mb="50px">
             <HistoryTabMenu
               activeIndex={historyTabMenuIndex}
@@ -75,13 +72,14 @@ const Winner = () => {
           )}
         </Flex>
       </PageSection>
-      <PageSection className="footer-section"
+      <PageSection
+        className="footer-section"
         innerProps={{ style: FooterContainerStyles }}
         background="#434343"
         index={2}
         hasCurvedDivider={false}
       >
-        <Footer/>
+        <Footer />
       </PageSection>
     </LotteryPage>
   )

@@ -3,8 +3,7 @@ import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
   title: 'SpacePies',
-  description:
-    'A project for playing SAFEMOON based lottery and winning amazing prizes on Binance Samrt Chain (BSC)',
+  description: 'A project for playing SAFEMOON based lottery and winning amazing prizes on Binance Samrt Chain (BSC)',
   image: 'https://pancakeswap.finance/images/hero.png',
 }
 

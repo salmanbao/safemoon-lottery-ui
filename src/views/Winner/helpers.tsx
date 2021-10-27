@@ -36,10 +36,8 @@ export const dateTimeOptions: Intl.DateTimeFormatOptions = {
 export const processLotteryResponse = (
   lotteryData: LotteryResponse & { userTickets?: LotteryRoundUserTickets },
 ): LotteryRound => {
-  const {
-    priceTicketInSafemoon: priceTicketInCakeAsString,
-    amountCollectedInSafemoon: amountCollectedInCakeAsString,
-  } = lotteryData
+  const { priceTicketInSafemoon: priceTicketInCakeAsString, amountCollectedInSafemoon: amountCollectedInCakeAsString } =
+    lotteryData
 
   const priceTicketInSafemoon = new BigNumber(priceTicketInCakeAsString)
   const amountCollectedInSafemoon = new BigNumber(amountCollectedInCakeAsString)
