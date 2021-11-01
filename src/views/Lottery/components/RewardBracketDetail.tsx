@@ -11,6 +11,7 @@ interface RewardBracketDetailProps {
   rewardBracket?: number
   numberWinners?: string
   isBurn?: boolean
+  isFunding?: boolean
   isHistoricRound?: boolean
   isLoading?: boolean
 }
@@ -21,6 +22,7 @@ const RewardBracketDetail: React.FC<RewardBracketDetailProps> = ({
   numberWinners,
   isHistoricRound,
   isBurn,
+  isFunding,
   isLoading,
 }) => {
   const { t } = useTranslation()
@@ -30,6 +32,9 @@ const RewardBracketDetail: React.FC<RewardBracketDetailProps> = ({
     const numberMatch = rewardBracket + 1
     if (isBurn) {
       return t('Burn')
+    }
+    if (isFunding) {
+      return t('Funding Wallet')
     }
     if (rewardBracket === 5) {
       return t('Match all %numberMatch%', { numberMatch })

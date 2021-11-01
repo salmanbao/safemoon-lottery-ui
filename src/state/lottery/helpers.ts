@@ -29,7 +29,7 @@ const processViewLotterySuccessResponse = (response, lotteryId: string): Lottery
   } = response
 
   const statusKey = Object.keys(LotteryStatus)[status]
-  const serializedCakePerBracket = safemoonPerBracket.map((safemoonInBracket) =>
+  const serializedSafemoonPerBracket = safemoonPerBracket.map((safemoonInBracket) =>
     ethersToSerializedBigNumber(safemoonInBracket),
   )
   const serializedCountWinnersPerBracket = countWinnersPerBracket.map((winnersInBracket) =>
@@ -49,7 +49,7 @@ const processViewLotterySuccessResponse = (response, lotteryId: string): Lottery
     lastTicketId: lastTicketId?.toString(),
     amountCollectedInSafemoon: ethersToSerializedBigNumber(amountCollectedInSafemoon),
     finalNumber,
-    safemoonPerBracket: serializedCakePerBracket,
+    safemoonPerBracket: serializedSafemoonPerBracket,
     countWinnersPerBracket: serializedCountWinnersPerBracket,
     rewardsBreakdown: serializedRewardsBreakdown,
   }

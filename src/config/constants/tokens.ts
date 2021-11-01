@@ -1665,7 +1665,7 @@ export const testnetTokens = {
   ),
   cake: new Token(
     TESTNET,
-    '0x71b894957FE11F7D94d0D91Cfef74735CE21A534',
+    '0xAa43A2bEb083CB2829CBA963400324Ce70880A03',
     18,
     'CAKE',
     'PancakeSwap Token',

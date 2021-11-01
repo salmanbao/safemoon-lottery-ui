@@ -30,6 +30,7 @@ interface RewardMatchesProps {
 interface RewardsState {
   isLoading: boolean
   cakeToBurn: BigNumber
+  safemoonToFunding: BigNumber
   rewardsLessTreasuryFee: BigNumber
   rewardsBreakdown: string[]
   countWinnersPerBracket: string[]
@@ -40,6 +41,7 @@ const RewardBrackets: React.FC<RewardMatchesProps> = ({ lotteryNodeData, isHisto
   const [state, setState] = useState<RewardsState>({
     isLoading: true,
     cakeToBurn: BIG_ZERO,
+    safemoonToFunding: BIG_ZERO,
     rewardsLessTreasuryFee: BIG_ZERO,
     rewardsBreakdown: null,
     countWinnersPerBracket: null,
@@ -48,14 +50,16 @@ const RewardBrackets: React.FC<RewardMatchesProps> = ({ lotteryNodeData, isHisto
   useEffect(() => {
     if (lotteryNodeData) {
       const { treasuryFee, amountCollectedInSafemoon, rewardsBreakdown, countWinnersPerBracket } = lotteryNodeData
-
       const feeAsPercentage = new BigNumber(treasuryFee).div(100)
+      const fundingAsPercentage = new BigNumber(500).div(100) // TODO: needs to be dynamic
       const cakeToBurn = feeAsPercentage.div(100).times(new BigNumber(amountCollectedInSafemoon))
-      const amountLessTreasuryFee = new BigNumber(amountCollectedInSafemoon).minus(cakeToBurn)
+      const safemoonToFunding = fundingAsPercentage.div(100).times(new BigNumber(amountCollectedInSafemoon))
+      // const amountLessTreasuryFee = new BigNumber(amountCollectedInSafemoon).minus(cakeToBurn).minus(safemoonToFunding)
       setState({
         isLoading: false,
         cakeToBurn,
-        rewardsLessTreasuryFee: amountLessTreasuryFee,
+        safemoonToFunding,
+        rewardsLessTreasuryFee: amountCollectedInSafemoon,
         rewardsBreakdown,
         countWinnersPerBracket,
       })
@@ -63,6 +67,7 @@ const RewardBrackets: React.FC<RewardMatchesProps> = ({ lotteryNodeData, isHisto
       setState({
         isLoading: true,
         cakeToBurn: BIG_ZERO,
+        safemoonToFunding: BIG_ZERO,
         rewardsLessTreasuryFee: BIG_ZERO,
         rewardsBreakdown: null,
         countWinnersPerBracket: null,
@@ -75,7 +80,7 @@ const RewardBrackets: React.FC<RewardMatchesProps> = ({ lotteryNodeData, isHisto
     return state.rewardsLessTreasuryFee.div(100).times(shareAsPercentage)
   }
 
-  const { isLoading, countWinnersPerBracket, cakeToBurn } = state
+  const { isLoading, countWinnersPerBracket, cakeToBurn, safemoonToFunding } = state
 
   const rewardBrackets = [0, 1, 2, 3, 4, 5]
 
@@ -97,6 +102,7 @@ const RewardBrackets: React.FC<RewardMatchesProps> = ({ lotteryNodeData, isHisto
           />
         ))}
         <RewardBracketDetail rewardBracket={0} cakeAmount={cakeToBurn} isBurn isLoading={isLoading} />
+        <RewardBracketDetail rewardBracket={10} cakeAmount={safemoonToFunding} isFunding isLoading={isLoading} />
       </RewardsInner>
     </Wrapper>
   )
